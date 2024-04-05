@@ -5,6 +5,7 @@ namespace WebApplication1;
 
 [ApiController]
 [Route("api/[controller]")] // Update route to have api in it. Helps distinguish between MVC and API controllers
+// renamed to MathController. We follow the scheme of {Entity}Controller.
 public class MathController : ControllerBase
 {
     [HttpGet]
