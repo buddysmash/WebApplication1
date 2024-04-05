@@ -10,18 +10,18 @@ namespace WebApplication1.Controllers
         public IActionResult Get()
         {
 
-            var hello = new Hello
-            {
-
-                Greeting = "Hello World",
-
-                Name = "Buddy"
-
-            };
+            var hello = new Hello();
 
             var response = $"{hello.Greeting}\nHello {hello.Name}";
 
-            return Ok(response);
+            try
+            {
+                return Redirect("~/PosterGetter.html");
+            }
+            catch
+            {
+                return Ok(response);
+            }
         }
     }
 }
