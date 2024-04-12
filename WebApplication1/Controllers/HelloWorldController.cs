@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-
+using WebApplication1.Models.Requests;
 namespace WebApplication1.Controllers;
 
     [ApiController]
@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers;
         [HttpGet]
         public IActionResult Get()
         {
-            var hello = new Hello();
+            var hello = new HelloWorldInput();
             var response = $"{hello.Greeting}\nHello {hello.Name}";
             try
             {

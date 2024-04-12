@@ -1,11 +1,12 @@
-namespace WebApplication1
+namespace WebApplication1.Models.Requests
 {
-    public class Hello
+    public class HelloWorldInput
     {
         public string Name { get; set; }
         public string Greeting { get; set; }
-        public Hello() {
-            
+        public HelloWorldInput()
+        {
+
             Name = "Buddy, I am free! You have released me from my prison due to your mistake!";
             Greeting = "Hello World";
 

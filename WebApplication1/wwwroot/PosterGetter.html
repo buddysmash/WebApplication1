@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Math API Client</title>
+    <link rel="stylesheet" href="PosterGetterText.css">
 </head>
 <body>
     <h1>Perform Math Operations</h1>
-    <form id="mathForm" action="/math" method="get">
-        <label for="num1">Enter the first number:</label>
-        <input type="number" id="num1" name="num1" required>
+    <form id="mathForm" action="/api/math" method="get">
+        <label for="Number1" class="n1">Enter the first number:</label>
+        <input type="text" id="Number1" name="Number1" class="i1" pattern="[0-9]*" title="Please enter only numbers" required>
         <br>
-        <label for="num2">Enter the second number:</label>
-        <input type="number" id="num2" name="num2" required>
+        <label for="Number2" class="n2">Enter the second number:</label>
+        <input type="number" id="Number2" name="Number2" class="i2" pattern="[0-9]*" title="Please enter only numbers" required>
         <br>
-        <label for="operation">Select an operation:</label>
-        <select id="oper" name="oper" required>
+        <label for="operation" class="n3">Select an operation:</label>
+        <select id="Operation" name="Operation" class="i3" required>
             <option value="" disabled selected>Select Operation</option>
             <option value="add">Addition</option>
             <option value="subtract">Subtraction</option>
@@ -22,20 +23,58 @@
             <option value="divide">Division</option>
         </select>
         <br>
-        <button type="submit">Submit</button>
+        <button class="Butt" type="submit">Submit</button>
+        <button class="Butt2" type="button" onclick="submitForm()">Post</button>
+        <br>
     </form>
     <script>
-        document.getElementById('mathForm').addEventListener('submit', function (event) {
+
+        // Creates a function that searches the url
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get the result value from the query parameter(saves the 'result')
+        const result = getQueryParam('result');
 
 
-            var num1 = document.getElementById('num1').value;
-            var num2 = document.getElementById('num2').value;
-            var oper = document.getElementById('oper').value;
+        // Check if the result is not null or undefined
+        if (result !== null && result !== undefined) {
+            // Create a paragraph element to display the answer below the form
+            const answer = document.createElement("p");
+            answer.innerText = "Result: " + result;
+            document.body.appendChild(answer);
+        }
 
-            var url = '/math';
+        // On event 'submit', sets variables equal to entered amounts and operation selected
+        function submitForm() {
+            var Number1 = document.getElementById('Number1').value;
+            var Number2 = document.getElementById('Number2').value;
+            var Operation = document.getElementById('Operation').value;
 
-            window.location.href = url;
-        });
+            fetch('/api/math', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    number1: Number1,  // Use the entered values for number1 and number2
+                    number2: Number2,
+                    operation: Operation  // Use the selected operation
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response data here
+                    console.log(data);
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('Error:', error);
+                });
+        }
+        
     </script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1.calculator;
 using WebApplication1.Models.Requests;
 
 namespace WebApplication1;
@@ -6,8 +7,10 @@ namespace WebApplication1;
 [ApiController]
 [Route("api/[controller]")] // Update route to have api in it. Helps distinguish between MVC and API controllers
 // renamed to MathController. We follow the scheme of {Entity}Controller.
-public class MathController : ControllerBase
+public class MathController(Calculation calculator) : ControllerBase
 {
+    private readonly Calculation _calculator = calculator;
+
     [HttpGet]
     public IActionResult Get([FromQuery] MathInput input)
     {
@@ -16,16 +19,14 @@ public class MathController : ControllerBase
         if (input is null)
             return BadRequest("Invalid input provided.");
 
-        var result = input.Operation switch
-        {
-            "add" => input.Num1 + input.Num2,
-            "subtract" => input.Num1 - input.Num2,
-            "multiply" => input.Num1 * input.Num2,
-            "divide" => input.Num1 / input.Num2,
-            _ => throw new ArgumentException("Invalid operation provided. Have some pi instead. 🥧")
-        };
-        return Ok(result);
+        if (input.Number1 == 69 && input.Number2 == 420)
+            return Redirect($"~/Joke");
+
+        //returns to html with result tacked onto end for use by html
+        var result = _calculator.Calculate(input.Operation, input.Number1, input.Number2);
+        return Redirect($"~/PosterGetter.html?result={result}");
     }
+
 
     [HttpPost]
     public IActionResult Post([FromBody] MathInput input)
@@ -33,14 +34,7 @@ public class MathController : ControllerBase
         if (input is null)
             return BadRequest("Invalid input provided.");
 
-        var result = input.Operation switch
-        {
-            "add" => input.Num1 + input.Num2,
-            "subtract" => input.Num1 - input.Num2,
-            "multiply" => input.Num1 * input.Num2,
-            "divide" => input.Num1 / input.Num2,
-            _ => throw new ArgumentException("Invalid operation provided. Have some pi instead. 🥧")
-        };
+        var result = _calculator.Calculate(input.Operation, input.Number1, input.Number2);
 
         return Ok(result);
     }

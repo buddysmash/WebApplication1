@@ -1,0 +1,39 @@
+﻿body {
+    background-color: darkslategrey;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 14px;
+    font-family: sans-serif
+}
+
+.i1 {
+    margin-left: 32px;
+}
+
+.i2 {
+    margin-left: 0px;
+}
+
+.i3 {
+    margin-left: 80px;
+    font-weight: bold;
+}
+
+.Butt {
+    margin-left: 180px;
+    margin-top: 40px;
+    padding: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 800;
+}
+
+.Butt2 {
+    margin-left: 20px;
+    margin-top: 40px;
+    padding: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 800;
+}
